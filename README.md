@@ -5,59 +5,60 @@ Loose
 
 ----------
 
-*JS*
+Loose() is a way to add expressive power to plain old python dicts. It is inspired by JavaScript objects : 
+
+*JS Object*
 
     var helper = {
       url : {
         to : function(slug) {
           return 'http://somesite.com/'+slug ;
-        },
-        withParams : {
-          to : {
-            firstModel : function(params) {
-              var base='http://somesite.com/firstModel?';
-              return URL(base, params);     
-            }
-          }
         }
       }
     }
 
-> helper.url.to('users') //returns "http://somesite.com/users"
+> helper.url.to('users') 
 
-Given a global helper URL that takes a base and queryParams as arguments :
-> helper.url.withParams.to.firstModel({page:1}); 
-//returns "http://somesite.com/firstModel?page=1"
+`returns "http://somesite.com/users"`
 
---------
+----
+*Loose Object in python*
 
-*Python*
-
+####Basic use case
     helper = Loose({
       'url' : Loose({
-        'to' : lambda slug (
+        'to' : lambda slug: (
           'http://somesite.com/'+slug 
-        ),
-        'withParams' : Loose({
-          'to' : Loose({
-            'firstModel' : lambda page=1 (
-              u = 'http://somesite.com/firstModel?page='
-              u + str(page)
-            )
-          })
-        })
+        )
       })
     })
     
-> helper.url.to('users') //returns "http://somesite.com/users"
+> \>\>\> helper.url.to('users') 
 
-Given a global helper URL that takes a base and queryParams as arguments :
-> helper.url.withParams.to.firstModel({'page':1}); 
-//returns "http://somesite.com/firstModel?page=1"
+`returns "http://somesite.com/users"`
+
 
 -------
-Installation
+
+####Using the `default` method
+    helper = Loose({
+      'url' : Loose({
+        'default' : 'http://somesite.com',
+        'to' : lambda slug: (
+          'http://somesite.com/'+slug 
+        )
+      })
+    })
+    
+> \>\>\> helper.url()
+
+`returns "http://somesite.com"`
+
+-------
+####Installation
 
 `pip install loose`
- 
-See tests for usage examples.
+
+-------
+####Issue Tracking and Bug Reports
+Add that shit to github's issue tracker.
