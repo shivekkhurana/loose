@@ -1,10 +1,10 @@
 Loose
-===================
+=====
 
 **Javascript** style objects in **Python**
 
 
-Loose() is a way to add expressive power to plain old python dicts. It is inspired by JavaScript objects : 
+Loose() is a way to add expressive power to plain old python dicts. It is inspired by JavaScript objects.
 
 ###JS Object
 
@@ -37,11 +37,11 @@ Loose() is a way to add expressive power to plain old python dicts. It is inspir
 
 `returns "http://somesite.com/users"`
 
-####Using the `default` method
+####Using the `_default` method
 
     helper = Loose({
       'url' : Loose({
-        'default' : 'http://somesite.com',
+        '_default' : 'http://somesite.com',
         'to' : lambda slug: (
           'http://somesite.com/'+slug 
         )

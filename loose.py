@@ -10,10 +10,10 @@ class Loose(object):
         self.obj = obj
 
     def __call__(self):
-        return self.__getattr__('default')()
+        return self.__getattr__('_default')()
 
     def __getattr__(self, method_name):
         try:
             return self.obj[method_name]
-        except Exception, e:
+        except Exception as e:
             raise KeyError('Method [%s] not defined' % (method_name))

@@ -24,11 +24,14 @@ class TestUrlBuilding(unittest.TestCase):
 
     def test_default_page(self):
         self.assertEqual(
-            self.helper.url.to.artists(), 'http://www.someurl.com/model?page=1')
+            self.helper.url.to.artists(), 'http://www.someurl.com/model?page=1'
+        )
 
     def test_specific_page(self):
         self.assertEqual(
-            self.helper.url.to.artists(23), 'http://www.someurl.com/model?page=23')
+            self.helper.url.to.artists(
+                23), 'http://www.someurl.com/model?page=23'
+        )
 
 
 class TestListParams(unittest.TestCase):
@@ -52,7 +55,7 @@ class TestLooseCallable(unittest.TestCase):
     def setUp(self):
         self.helper = Loose({
             'url': Loose({
-                'default': lambda: (
+                '_default': lambda: (
                     'www.google.com'
                 ),
 
@@ -75,10 +78,9 @@ class TestExceptions(unittest.TestCase):
     def setUp(self):
         self.helper = Loose({
             'url': Loose({
-                'default': lambda: (
+                '_default': lambda: (
                     'www.google.com'
                 ),
-
                 'country': lambda tld: (
                     'www.google.co.' + tld
                 )
@@ -87,16 +89,10 @@ class TestExceptions(unittest.TestCase):
         })
 
     def test_raise_key_error_if_no_default(self):
-        self.assertRaises(KeyError, self.helper)
+        with self.assertRaises(KeyError):
+            self.helper()
 
     def test_raise_key_error_if_method_not_defined(self):
-        '''
-        - in noDefault case, the default method is called and exception is raised
-        - in noUndefinedMethod case, the method does not get called and an attemt to return a pointer is made
-          which fails because method doesn't exist
-        - if this method is tested in same way as noDefault method, it will return a KeyError because attempt to 
-          return a pointer to a lambda function failed, and the exception will not be raised and catched.
-        '''
         with self.assertRaises(KeyError):
             self.helper.some_undefined_method()
 
